@@ -1,38 +1,38 @@
-# Magisk SELinux Manager
-A Magisk Module dedicated to the manipulation and analysis of SELinux
+# Magisk SELinux 管理器
+一个专门用于SELinux的操作和分析Magisk模块
 
-## Features
-  * Set SELinux Mode (Enforcing or Permissive) at startup
+## 特征
+  * 启动时设置SELinux 强制或允许(Enforcing or Permissive)
 
-## Dependencies
+## 依赖
   * Magisk v15.3+
-  * Android v4.3+ device
-  * SELinux Enabled Kernel
+  * Android v4.3+ 设备
+  * 可调整SELinux的内核
   
-## Support & Discussions
-See https://forum.xda-developers.com/apps/magisk/module-magisk-selinux-manager-t3760042
+## 支持与讨论
+详见 https://forum.xda-developers.com/apps/magisk/module-magisk-selinux-manager-t3760042
 
-## Special Thanks
-  * ahrion & Zackptg5 - Providing the Unity Installer (https://forum.xda-developers.com/android/software/module-audio-modification-library-t3579612) and Vol Key Input Code (https://forum.xda-developers.com/android/software/guide-volume-key-selection-flashable-zip-t3773410)
-  * topjohnwu - Providing us with Magisk (https://forum.xda-developers.com/apps/magisk/official-magisk-v7-universal-systemless-t3473445)
+## 特别感谢
+  * ahrion & Zackptg5 - 提供Unity安装程序 (https://forum.xda-developers.com/android/software/module-audio-modification-library-t3579612) 和Vol Key输入代码 (https://forum.xda-developers.com/android/software/guide-volume-key-selection-flashable-zip-t3773410)
+  * topjohnwu - 向我们提供Magisk (https://forum.xda-developers.com/apps/magisk/official-magisk-v7-universal-systemless-t3473445)
 
-## Change Log
+## 更改日志
   * v1.0.5
-    - Update Unity Installer Files & Scripts (v1.5.4)
+    - 更新Unity安装程序文件和脚本 (v1.5.4)
     
   * v1.0.4
-    - Update Unity Installer Files & Scripts (v1.5.3)
+    - 更新Unity安装程序文件和脚本 (v1.5.3)
 
   * v1.0.3
-    - Update Unity Installer Files & Scripts (v1.5.2)
+    - 更新Unity安装程序文件和脚本 (v1.5.2)
 
   * v1.0.2
-    - Update Unity Installer Files & Scripts
-    - Update Vol Key Selection Code
+    - 更新Unity安装程序文件和脚本
+    - 更新Vol Key选择代码
 
   * v1.0.1
-    - Update Unity Installer Files & Scripts
+    - 更新Unity安装程序文件和脚本
 
   * v1.0.0
-    - Initial Release
-    - Select SELinux Mode set at Startup
+    - 初始发布
+    - 选择启动时设置的SELinux模式
