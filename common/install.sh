@@ -11,19 +11,19 @@ case $ZIP_FILE in
     ;;
 esac
 
-# Change this path to wherever the keycheck binary is located in your installer
+# 将此路径更改为keycheck二进制文件在安装程序中的位置
 KEYCHECK=$INSTALLER/keycheck
 chmod 755 $KEYCHECK
 
 keytest() {
-  ui_print "- Vol Key Test -"
-  ui_print "   Press Vol Up:"
+  ui_print "- 音量键测试 -"
+  ui_print "   按下音量+:"
   (/system/bin/getevent -lc 1 2>&1 | /system/bin/grep VOLUME | /system/bin/grep " DOWN" > $INSTALLER/events) || return 1
   return 0
 }   
 
 choose() {
-  #note from chainfire @xda-developers: getevent behaves weird when piped, and busybox grep likes that even less than toolbox/toybox grep
+  #来自 chainfire @xda-developers 的说明: getevent behaves weird when piped, and busybox grep likes that even less than toolbox/toybox grep
   while (true); do
     /system/bin/getevent -lc 1 2>&1 | /system/bin/grep VOLUME | /system/bin/grep " DOWN" > $INSTALLER/events
     if (`cat $INSTALLER/events 2>/dev/null | /system/bin/grep VOLUME >/dev/null`); then
@@ -51,8 +51,8 @@ chooseold() {
   elif [ $SEL -eq $DOWN ]; then
     return 1
   else
-    ui_print "   Vol key not detected!"
-    abort "   Use name change method in TWRP"
+    ui_print "   未检测到音量键!"
+    abort "   在TWRP中使用更改名称方法安装"
   fi
 }
 
@@ -61,29 +61,29 @@ if [ $SELINUX_MODE == $UNSELECTED_MODE ]; then
     FUNCTION=choose
   else
     FUNCTION=chooseold
-    ui_print "   ! Legacy device detected! Using old keycheck method"
+    ui_print "   ! 检测到旧设备！使用旧的keycheck方法"
     ui_print " "
-    ui_print "- Vol Key Programming -"
-    ui_print "   Press Vol Up Again:"
+    ui_print "- 音量键编程中 -"
+    ui_print "   再次按下音量+:"
     $FUNCTION "UP"
-    ui_print "   Press Vol Down"
+    ui_print "   按下音量-"
     $FUNCTION "DOWN"
   fi
   
   ui_print " "
-  ui_print "---Select SELinux Mode---"
-  ui_print "  Vol+ = Enforcing"
-  ui_print "  Vol- = Permissive"
+  ui_print "---选择SELinux模式---"
+  ui_print "  音量+ = 执行(Enforcing)"
+  ui_print "  音量- = 许可(Permissive)"
   if $FUNCTION; then
     SELINUX_MODE=1
-    ui_print "SELinux Enforcing Mode selected."
+    ui_print "已选择SELinux模式 执行(Enforcing)."
   else
     SELINUX_MODE=0
-    ui_print "SELinux Permissive Mode selected."
+    ui_print "已选择SELinux模式 许可(Permissive)."
   fi
 else
-  ui_print "SELinux Mode specified in filename : $ZIP_FILE"
+  ui_print "在文件名中指定SELinux模式 : $ZIP_FILE"
 fi
 
-ui_print "Writing SELinux Mode to startup script..."
+ui_print "将SELinux模式写入启动脚本中..."
 sed -i "s/<SELINUX_MODE>/$SELINUX_MODE/g" $INSTALLER/common/post-fs-data.sh
