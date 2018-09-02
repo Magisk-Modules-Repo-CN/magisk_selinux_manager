@@ -18,15 +18,15 @@ mount_partitions() {
   # Check the boot image to make sure the slot actually make sense
   find_boot_image
   find_dtbo_image
-  [ -z $SLOT ] || ui_print "- A/B partition detected, current slot: $SLOT"
-  ui_print "- Mounting /system, /vendor"
+  [ -z $SLOT ] || ui_print "- 检测到A / B分区, 当前插槽: $SLOT"
+  ui_print "- 挂载 /system, /vendor 中"
   REALSYS=/system
   is_mounted /system || [ -f /system/build.prop ] || mount -o rw /system 2>/dev/null
   if ! is_mounted /system && ! [ -f /system/build.prop ]; then
     SYSTEMBLOCK=`find /dev/block -iname system$SLOT | head -n 1`
     mount -t ext4 -o rw $SYSTEMBLOCK /system
   fi
-  is_mounted /system || [ -f /system/build.prop ] || abort "! Cannot mount /system"
+  is_mounted /system || [ -f /system/build.prop ] || abort "! 无法挂载 /system"
   cat /proc/mounts | grep -E '/dev/root|/system_root' >/dev/null && SKIP_INITRAMFS=true || SKIP_INITRAMFS=false
   if [ -f /system/init.rc ]; then
     SKIP_INITRAMFS=true
@@ -36,7 +36,7 @@ mount_partitions() {
     ROOT=/system_root
     REALSYS=/system_root/system
   fi
-  $SKIP_INITRAMFS && ui_print "- Device skip_initramfs detected"
+  $SKIP_INITRAMFS && ui_print "- 检测到设备skip_initramfs"
   if [ -L /system/vendor ]; then
     # Seperate /vendor partition
     VEN=/vendor
@@ -46,7 +46,7 @@ mount_partitions() {
       VENDORBLOCK=`find /dev/block -iname vendor$SLOT | head -n 1`
       mount -t ext4 -o rw $VENDORBLOCK /vendor
     fi
-    is_mounted /vendor || abort "! Cannot mount /vendor"
+    is_mounted /vendor || abort "! 无法挂载 /vendor"
   else
     VEN=/system/vendor
     REALVEN=$REALSYS/vendor
@@ -112,7 +112,7 @@ recovery_cleanup() {
   mv /sbin_tmp /sbin 2>/dev/null
   export LD_LIBRARY_PATH=$OLD_LD_PATH
   [ -z $OLD_PATH ] || export PATH=$OLD_PATH
-  ui_print "- Unmounting partitions"
+  ui_print "- 卸载分区"
   umount -l /system_root 2>/dev/null
   umount -l /system 2>/dev/null
   umount -l /vendor 2>/dev/null
@@ -173,7 +173,7 @@ supersuimg_mount() {
   supersuimg=$(ls /cache/su.img /data/su.img 2>/dev/null)
   if [ "$supersuimg" ]; then
     if ! is_mounted /su; then
-      ui_print "    Mounting /su..."
+      ui_print "    挂载 /su 中..."
       [ -d /su ] || mkdir /su
       mount -t ext4 -o rw,noatime $supersuimg /su 2>/dev/null
       for i in 0 1 2 3 4 5 6 7; do
@@ -189,22 +189,20 @@ supersuimg_mount() {
 
 require_new_magisk() {
   ui_print "*******************************"
-  ui_print " Please install Magisk $(echo $MINMAGISK | sed -r "s/(.{2})(.{1}).*/v\1.\2+\!/") "
+  ui_print " 请安装 Magisk $(echo $MINMAGISK | sed -r "s/(.{2})(.{1}).*/v\1.\2+\!/") "
   ui_print "*******************************"
   exit 1
 }
 
 require_new_api() {
   ui_print "***********************************"
-  ui_print "!   Your system API of $API isn't"
+  ui_print "!   您的系统API为 $API"
   if [ "$1" == "minimum" ]; then
-    ui_print "! higher than the $1 API of $MINAPI"
-    ui_print "! Please upgrade to a newer version"
-    ui_print "!  of android with at least API $MINAPI"
+    ui_print "! 高于 $MINAPI 的 $1 API"
+    ui_print "! 请升级到新版本的Android，至少API $MINAPI"
   else
-    ui_print "!   lower than the $1 API of $MAXAPI"
-    ui_print "! Please downgrade to an older version"
-    ui_print "!    of android with at most API $MAXAPI"
+    ui_print "! 低于 $MAXAPI 的 $1 API"
+    ui_print "! 请降级到旧版本的Android，最多API $MAXAPI"
   fi
   ui_print "***********************************"
   exit 1
@@ -222,7 +220,7 @@ cleanup() {
     ui_print "    *      Powered by Magisk (@topjohnwu)     *"
     ui_print "    *******************************************"
   else
-    ui_print "   Unmounting partitions..."
+    ui_print "   卸载分区..."
     unmount_partitions
     rm -rf $TMPDIR
   fi
@@ -331,7 +329,7 @@ prop_process() {
 
 remove_old_aml() {
   ui_print " "
-  ui_print "   ! Old AML Detected! Removing..."
+  ui_print "   ! 检测到旧的AML！删除中..."
   if $MAGISK; then
     MODS=$(grep "^fi #.*" $(dirname $OLD_AML_VER)/post-fs-data.sh | sed "s/fi #//g")
     if $BOOTMODE; then DIR=/sbin/.core/img; else DIR=$MOUNTPATH; fi
